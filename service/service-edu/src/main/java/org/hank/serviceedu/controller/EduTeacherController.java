@@ -47,8 +47,14 @@ public class EduTeacherController {
 
     @ApiOperation("根据ID删除讲师")
     @DeleteMapping("{id}")
-    public R removeById(@PathVariable String id) {
-        return R.ok();
+    public R removeById(
+            @ApiParam(name = "id", value = "讲师ID", required = true)
+            @PathVariable String id) {
+        boolean result = teacherService.removeById(id);
+        if (result) {
+            return R.ok();
+        }
+        return R.error().message("删除失败");
     }
 
     @ApiOperation("分页讲师列表")
